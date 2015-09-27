@@ -9,7 +9,15 @@
   <!-- ========= -->
   <!-- Your HTML -->
   <!-- ========= -->
-  <div id="container">Loading...</div>
+  <section id="todoapp">
+    <header id="header">
+      <h1>Todos</h1>
+      <input id="new-todo" placeholder="What needs to be done?">
+    </header>
+    <section id="main">
+      <ul id="todo-list"></ul>
+    </section>
+  </section>
   <!-- ========= -->
   <!-- Libraries -->
   <!-- ========= -->
@@ -22,6 +30,14 @@
   <!-- Javascript code -->
   <!-- =============== -->
   <script type="text/javascript">
+      var app = {}; // create namespace for our app
+
+      app.Todo = Backbone.Model.extend({
+        defaults: {
+          title: '',
+          completed: false
+        }
+      });
       var AppView = Backbone.View.extend({
       // el - stands for element. Every view has a element associate in with HTML
       //      content will be rendered.
