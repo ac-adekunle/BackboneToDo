@@ -16,8 +16,16 @@
     </header>
     <section id="main">
       <ul id="todo-list"></ul>
+       <script type="text/template" id="item-template">
+       <div class="view">
+         <input class= "toggle" type="checkbox">
+         <label> <%= title %> </label>
+    </div>
+  </script>
     </section>
   </section>
+
+  
   <!-- ========= -->
   <!-- Libraries -->
   <!-- ========= -->
@@ -29,6 +37,7 @@
   <!-- =============== -->
   <!-- Javascript code -->
   <!-- =============== -->
+ 
   <script type="text/javascript">
       var app = {}; // create namespace for our app
 
@@ -48,22 +57,36 @@
       app.todoList = new app.TodoList();
 
 
-      var AppView = Backbone.View.extend({
-      // el - stands for element. Every view has a element associate in with HTML
-      //      content will be rendered.
-      el: '#container',
-      template: _.template("<h3> Hello <%= who %></h3>"),
-      // It's the first function called when this view it's instantiated.
-      initialize: function(){
-        this.render();
-      },
-      // $el - it's a cached jQuery object (el), in which you can use jQuery functions
-      //       to push content. Like the Hello World in this case.
+    //   var AppView = Backbone.View.extend({
+    //   // el - stands for element. Every view has a element associate in with HTML
+    //   //      content will be rendered.
+    //   el: '#container',
+    //   template: _.template("<h3> Hello <%= who %></h3>"),
+    //   // It's the first function called when this view it's instantiated.
+    //   initialize: function(){
+    //     this.render();
+    //   },
+    //   // $el - it's a cached jQuery object (el), in which you can use jQuery functions
+    //   //       to push content. Like the Hello World in this case.
+    //   render: function(){
+    //     this.$el.html(this.template({who: 'world'}));
+    //   }
+    // });
+    // var appView = new AppView();
+    
+    // renders individual todo items list (li)
+    app.TodoView = Backbone.View.extend({
+      tagName: 'li',
+      template: _.template($('#item-template').html()),
       render: function(){
-        this.$el.html(this.template({who: 'world'}));
+        this.$el.html(this.template(this.model.toJSON()));
+        return this; // enable chained calls
       }
     });
-    var appView = new AppView();
+
+    var view = new app.TodoView({model: todo});
+
+
   </script>
   
 </body>
